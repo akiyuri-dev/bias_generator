@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>推しジェネレーター</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- 入力エリア部分 -->
+    <dl class="table">
+        <dt>馴れ初め</dt>
+        <dd><textarea rows="10" cols="60" type="text" name="txt01" id="txt01">ここに記入してください</textarea></dd>
+        <dt>詳細</dt>
+        <dd><textarea rows="10" cols="60" type="text" name="txt02" id="txt02">ここに記入してください</textarea></dd>
+    </dl>
+    <div class="btn">
+        <button id="update">画像生成</button>
+        <a id="download-image">download image</a>
+    </div>
+
+
+    <!-- 出力部分 -->
+    <style>
+        #result {
+            letter-spacing: 3px;
+            font-family: Noto Sans JP;
+        }
+
+    </style>
+    <div class="module">
+        <h2>結果</h2>
+        <!-- width,heightは必須 -->
+        <canvas id="result" width="900" height="1600"></canvas>
+    </div>
+    <div class="btn">
+        <form id="saveform">
+            <button id="save">画像として保存</button>
+        </form>
+    </div>
+    <script src="https://code.createjs.com/easeljs-0.7.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+        (function($) {
+            var init = function() {
+                baseImg = new Image();
+                baseImg.src = 'card_notext.png';
+                stage = new createjs.Stage('result');
+            }
+
+            var genImage = function() {
+                var img = new createjs.Bitmap(baseImg);
+
+                stage.addChild(img);
+
+                var txt = {
+                    'txt01': {
+                        'x': 220,
+                        'y': 745,
+                        'size': '32px',
+                        'align': 'left',
+                        'color': '#c0b07a',
+                        'lineHeight': '48',
+                        'fontweight': 'bold'
+                    },
+                    'txt02': {
+                        'x': 220,
+                        'y': 914,
+                        'size': '24px',
+                        'align': 'left',
+                        'color': '#c0b07a',
+                        'lineHeight': '40',
+                        'fontweight': 'normal'
+                    }
+                }
+
+                $.each(txt, function(key, value) {
+                    var content = $('#' + key).val();
+
+                    if (key == 'txt01' && content) {
+                        var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{13})/g, "$1" + "\n");
+                        if (content.length < 13) {
+                            this.y = 793;
+                        }
+                    }
+
+                    if (key == 'txt02') {
+                        var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{17})/g, "$1" + "\n");
+                    }
+
+                    var obj = new createjs.Text(content);
+
+                    obj.textAlign = value.align;
+                    obj.font = value.fontweight + ' ' + value.size + '/1.5 "Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif';
+                    obj.x = value.x;
+                    obj.y = value.y;
+                    obj.color = value.color;
+                    obj.lineHeight = value.lineHeight;
+
+                    stage.addChild(obj);
+                });
+            }
+
+            var save = function() {
+                var png = stage.toDataURL('image/png');
+                if (png) {
+                    $('input[name="img"]').remove();
+                    $('#saveform').append('<input type="hidden" name="img" value="' + png + '" />');
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            $(function() {
+                $(window).on('load', function() {
+                    init();
+                });
+
+                $('#update').on('click', function(e) {
+                    stage = new createjs.Stage('result');
+                    genImage();
+                    stage.update();
+                });
+
+                $('#saveform').on('submit', function() {
+                    const base64toBlob = (base64) => {
+                        let tmp = base64.split(',');
+                        let data = atob(tmp[1]);
+                        let mime = tmp[0].split(':')[1].split(';')[0];
+                        let buf = new Uint8Array(data.length);
+                        for (let i = 0; i < data.length; ++i) {
+                            buf[i] = data.charCodeAt(i);
+                        }
+                        let blob = new Blob([buf], {
+                            type: mime
+                        });
+                        return blob;
+                    };
+
+                    let canvas = document.getElementById('result');
+                    let base64 = canvas.toDataURL();
+                    let blob = base64toBlob(base64);
+                    let dlFileName = 'bias_' + (new Date()).getTime() + '.png';
+
+                    let a = document.getElementById('download-image');
+                    a.href = window.URL.createObjectURL(blob);
+                    a.download = dlFileName;
+                    a.click();
+                    return false;
+                });
+            });
+        })(jQuery);
+
+    </script>
+</body>
+
+</html>
