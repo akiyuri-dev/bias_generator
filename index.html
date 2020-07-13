@@ -3,43 +3,315 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>推しジェネレーター</title>
+    <title>Where is your bias?</title>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet" />
+
+    <meta name="description" content="Where is your bias? #YOUの自担はどこから？（スト担向け）">
+    <meta property="og:title" content="Where is your bias?">
+    <meta property="og:description" content="Where is your bias? #YOUの自担はどこから？（スト担向け）">
+    <meta property="og:image" content="https://oharu-st.github.io/bias_generator/ogp.png">
+    <meta property="og:url" content="https://oharu-st.github.io/bias_generator/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Where is your bias?">
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="315">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://oharu-st.github.io/bias_generator/ogp.png">
+    <!-- /Twitter Card -->
+
 </head>
 
 <body>
-    <!-- 入力エリア部分 -->
-    <dl class="table">
-        <dt>馴れ初め</dt>
-        <dd><textarea rows="10" cols="60" type="text" name="txt01" id="txt01">ここに記入してください</textarea></dd>
-        <dt>詳細</dt>
-        <dd><textarea rows="10" cols="60" type="text" name="txt02" id="txt02">ここに記入してください</textarea></dd>
-    </dl>
-    <div class="btn">
-        <button id="update">画像生成</button>
-        <a id="download-image">download image</a>
-    </div>
-
-
-    <!-- 出力部分 -->
     <style>
+        /* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        canvas,
+        details,
+        embed,
+        figure,
+        figcaption,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        output,
+        ruby,
+        section,
+        summary,
+        time,
+        mark,
+        audio,
+        video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        /* HTML5 display-role reset for older browsers */
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
+            display: block;
+        }
+
+        body {
+            line-height: 1;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+
+        blockquote,
+        q {
+            quotes: none;
+        }
+
+        blockquote:before,
+        blockquote:after,
+        q:before,
+        q:after {
+            content: '';
+            content: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        html,
+        body {
+            background-color: #161619;
+            text-align: center;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif !important;
+            font-size: 100%;
+            color: #d9d4c3;
+        }
+
+        .wrapper {
+            max-width: 960px;
+            padding: 0 8%;
+        }
+
+        .description {
+            margin-top: 8%;
+            border-top: 1px solid #d9d4c3;
+            border-bottom: 1px solid #d9d4c3;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 8% 0;
+            letter-spacing: 1px;
+            margin-bottom: 8%;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+        }
+
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 5px;
+            margin-bottom: 8%
+        }
+
+        .form p {
+            font-size: 12px;
+            line-height: 1.5;
+            text-align: left;
+            margin-bottom: 2%;
+        }
+
+        .form input {
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 5px;
+            padding: 5px;
+
+        }
+
+        .form .column {
+            margin-bottom: 2%;
+        }
+
+        select {
+            width: 100%;
+            font-size: 12px;
+            padding: 2px 2px 6px;
+        }
+
+        .btn {
+            margin: 0 auto 16%;
+            border-width: 2px;
+            border-color: #c0b07a;
+            color: #c0b07a;
+            border-style: solid;
+            width: 75%;
+            height: 38px;
+            line-height: 35px;
+            border-radius: 40px;
+            vertical-align: middle;
+            font-size: 14px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .hide {
+            display: none;
+        }
+
         #result {
-            letter-spacing: 3px;
-            font-family: Noto Sans JP;
+            margin-bottom: 8%;
+        }
+
+        #download-image {
+            height: 0;
+            display: block;
+            overflow: hidden;
+            visibility: hidden;
         }
 
     </style>
-    <div class="module">
-        <h2>結果</h2>
-        <!-- width,heightは必須 -->
-        <canvas id="result" width="900" height="1600"></canvas>
-    </div>
-    <div class="btn">
-        <form id="saveform">
-            <button id="save">画像として保存</button>
-        </form>
+
+    <div class="wrapper">
+        <h1><img src="top.svg" alt="Where is your bias? #YOUの自担はどこから？（スト担向け）"></h1>
+
+        <div class="description">
+            <p>説明テキストテキストテキストテキスト説明テキストテキストテキストテキスト説明テキストテキストテキストテキストテキストテキ</p>
+        </div>
+
+        <div class="form">
+            <div class="column">
+                <p>推しを選んでください</p>
+                <select id="bisa" name="bias">
+                    <option value="none">推しを選択</option>
+                    <option value="icon_jesse">ジェシー</option>
+                    <option value="icon_kyomo">京本 大我</option>
+                    <option value="icon_hokuto">松村 北斗</option>
+                    <option value="icon_kochi">髙地 優吾</option>
+                    <option value="icon_shintaro">森本 慎太郎</option>
+                    <option value="icon_juri">田中 樹</option>
+                </select>
+            </div>
+            <div class="column">
+                <p>自担への沼落ちを一言で</p>
+                <input type="text" name="txt01" id="txt01">
+            </div>
+            <div class="column">
+                <p>沼落ちを一言で</p>
+                <textarea rows="6" type="text" name="txt02" id="txt02"></textarea>
+            </div>
+        </div>
+
+        <a class="btn" id="update" href="#">画像を作成する！</a>
+
+        <style>
+            #result {
+                letter-spacing: 3px;
+            }
+
+        </style>
+        <div class="hide">
+            <div class="module">
+                <canvas id="result" width="900" height="1600"></canvas>
+            </div>
+            <a href="#" class="btn" id="saveform">画像として保存</a>
+            <a id="download-image">images DL</a>
+        </div>
     </div>
     <script src="https://code.createjs.com/easeljs-0.7.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -48,13 +320,21 @@
             var init = function() {
                 baseImg = new Image();
                 baseImg.src = 'card_notext.png';
+                iconImg = new Image();
                 stage = new createjs.Stage('result');
             }
 
             var genImage = function() {
                 var img = new createjs.Bitmap(baseImg);
-
+                var icon = new createjs.Bitmap(iconImg);
+                var
+                    val = $('select option:selected').val();
+                iconImg.src = val + '.png';
+                icon.regX = -380;
+                icon.regY = -394;
+                console.dir(iconImg);
                 stage.addChild(img);
+                stage.addChild(icon);
 
                 var txt = {
                     'txt01': {
@@ -75,6 +355,10 @@
                         'lineHeight': '40',
                         'fontweight': 'normal'
                     }
+                }
+                var icon = {
+                    'x': 220,
+                    'y': 745
                 }
 
                 $.each(txt, function(key, value) {
@@ -104,29 +388,27 @@
                 });
             }
 
-            var save = function() {
-                var png = stage.toDataURL('image/png');
-                if (png) {
-                    $('input[name="img"]').remove();
-                    $('#saveform').append('<input type="hidden" name="img" value="' + png + '" />');
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
             $(function() {
                 $(window).on('load', function() {
                     init();
                 });
 
                 $('#update').on('click', function(e) {
+                    e.preventDefault();
+                    $('.hide').fadeIn();
+                    var speed = 1000;
+                    var target = $('#result');
+                    var position = target.offset().top;
+                    $("html, body").animate({
+                        scrollTop: position
+                    }, speed, "swing");
                     stage = new createjs.Stage('result');
                     genImage();
                     stage.update();
                 });
 
-                $('#saveform').on('submit', function() {
+                $('#saveform').on('click', function(e) {
+                    e.preventDefault();
                     const base64toBlob = (base64) => {
                         let tmp = base64.split(',');
                         let data = atob(tmp[1]);
