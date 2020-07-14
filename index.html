@@ -176,6 +176,14 @@
             color: #d9d4c3;
         }
 
+        select,
+        input,
+        textarea,
+        p,
+        a {
+            font-family: 'Noto Sans JP', sans-serif !important;
+        }
+
         .wrapper {
             max-width: 960px;
             padding: 0 8%;
@@ -205,8 +213,17 @@
         textarea {
             width: 100%;
             box-sizing: border-box;
-            padding: 5px;
-            margin-bottom: 8%
+            padding: 11px 15px;
+            margin-bottom: 8%;
+            border: 2px solid #E6E6E6;
+            border-radius: 5px;
+            outline: none;
+            background-color: #fff;
+            font-size: 16px;
+        }
+
+        textarea:focus {
+            border-color: #c0b07a;
         }
 
         .form p {
@@ -220,18 +237,195 @@
             width: 100%;
             box-sizing: border-box;
             border-radius: 5px;
-            padding: 5px;
+            padding: 11px 15px;
+            border: 2px solid #E6E6E6;
+            border-radius: 5px;
+            outline: none;
+            background-color: #fff;
+            font-size: 16px;
 
+        }
+
+        .form input:focus {
+            border-color: #c0b07a;
         }
 
         .form .column {
-            margin-bottom: 2%;
+            margin-bottom: 15px;
         }
 
-        select {
+        /*select {
             width: 100%;
             font-size: 12px;
             padding: 2px 2px 6px;
+        }*/
+        [include*="form-input-select()"] {
+            display: block;
+            padding: 0;
+            position: relative;
+            display: block;
+            border-radius: 5px;
+            box-shadow: none;
+            font-size: 16px;
+            margin-top: 9px;
+            margin-bottom: 15px;
+            width: 100%;
+            background-color: #fff;
+            color: #161619;
+        }
+
+        [include*="form-input-select()"]::before,
+        [include*="form-input-select()"]::after {
+            content: '';
+            display: block;
+            position: absolute;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        [include*="form-input-select()"] select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: none;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0;
+            border: 1px solid transparent;
+            font-size: 14px;
+            outline: none;
+            /* Focus style */
+        }
+
+        [include*="form-input-select()"] select:focus {
+            background-color: #fff;
+            outline: none;
+        }
+
+        [include*="form-input-select()"] option {
+            font-weight: normal;
+        }
+
+        [include*="form-input-select()"] x:-o-prefocus,
+        [include*="form-input-select()"]::after {
+            display: none;
+        }
+
+        @media screen and (-ms-high-contrast: active),
+        (-ms-high-contrast: none) {
+            [include*="form-input-select()"] select::-ms-expand {
+                display: none;
+            }
+
+            [include*="form-input-select()"] select:focus::-ms-value {
+                background: transparent;
+                color: #000;
+            }
+        }
+
+        @-moz-document url-prefix() {
+            [include*="form-input-select()"] {
+                overflow: hidden;
+            }
+
+            [include*="form-input-select()"] select {
+                width: 120%;
+                width: calc(100% + 3em);
+                /* Firefox focus has odd artifacts around the text, this kills that. See https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-focusring */
+            }
+
+            @supports (-moz-appearance: none) {
+                [include*="form-input-select()"] select {
+                    width: 100%;
+                }
+            }
+
+            [include*="form-input-select()"] select:-moz-focusring {
+                color: transparent;
+                text-shadow: 0 0 0 #000;
+            }
+        }
+
+        @supports (-moz-appearance: none) {
+            [include*="form-input-select()"] {
+                width: 100%;
+            }
+        }
+
+        [include*="form-input-select()"]::before,
+        [include*="form-input-select()"]::after {
+            content: '';
+            display: block;
+            position: absolute;
+            pointer-events: none;
+            border: 1px solid transparent;
+            width: 0;
+            height: 0;
+            right: 16px;
+        }
+
+        [include*="form-input-select()"]::before {
+            bottom: 55%;
+            border-width: 0 6.5px 8px 6.5px;
+            border-bottom-color: #161619;
+        }
+
+        [include*="form-input-select()"]::after {
+            border-width: 8px 6.5px 0 6.5px;
+            border-top-color: #161619;
+            top: 55%;
+        }
+
+        @-moz-document url-prefix() {
+            [include*="form-input-select()"] {
+                border-right: 3px solid #E6E6E6;
+            }
+
+            [include*="form-input-select()"]:hover {
+                border-right: 3px solid #c0b07a;
+            }
+        }
+
+        [include*="form-input-select()"]:hover select {
+            border-color: #c0b07a;
+        }
+
+        [include*="form-input-select()"]:hover select:focus {
+            outline-color: transparent;
+        }
+
+        [include*="form-input-select()"]:hover::before {}
+
+        [include*="form-input-select()"]:hover::after {}
+
+        [include*="form-input-select()"] select {
+            border: 2px solid #E6E6E6;
+            border-radius: 5px;
+            font-weight: 400;
+            color: inherit;
+            padding: 11px 15px;
+            line-height: normal;
+            -webkit-transition: border-color 0.2s ease, outline 0.2s ease;
+            transition: border-color 0.2s ease, outline 0.2s ease;
+        }
+
+        [include*="form-input-select()"] select:focus {
+            outline: 3px solid #c0b07a;
+            outline-offset: -3px;
+        }
+
+        [include*="form-input-select()"] select[disabled],
+        [include*="form-input-select()"] select:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        [include*="form-input-select()"] select:not(:focus):invalid {}
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
         }
 
         .btn {
@@ -250,9 +444,7 @@
             text-decoration: none;
         }
 
-        .hide {
-            display: none;
-        }
+        .hide {}
 
         #result {
             margin-bottom: 8%;
@@ -277,15 +469,17 @@
         <div class="form">
             <div class="column">
                 <p>推しを選んでください</p>
-                <select id="bisa" name="bias">
-                    <option value="none">推しを選択</option>
-                    <option value="icon_jesse">ジェシー</option>
-                    <option value="icon_kyomo">京本 大我</option>
-                    <option value="icon_hokuto">松村 北斗</option>
-                    <option value="icon_kochi">髙地 優吾</option>
-                    <option value="icon_shintaro">森本 慎太郎</option>
-                    <option value="icon_juri">田中 樹</option>
-                </select>
+                <div include="form-input-select()">
+                    <select id="bisa" name="bias">
+                        <option value="none">推しを選択</option>
+                        <option value="icon_jesse">ジェシー</option>
+                        <option value="icon_kyomo">京本 大我</option>
+                        <option value="icon_hokuto">松村 北斗</option>
+                        <option value="icon_kochi">髙地 優吾</option>
+                        <option value="icon_shintaro">森本 慎太郎</option>
+                        <option value="icon_juri">田中 樹</option>
+                    </select>
+                </div>
             </div>
             <div class="column">
                 <p>自担への沼落ちを一言で</p>
@@ -296,8 +490,6 @@
                 <textarea rows="6" type="text" name="txt02" id="txt02"></textarea>
             </div>
         </div>
-
-        <a class="btn" id="update" href="#">画像を作成する！</a>
 
         <style>
             #result {
@@ -317,11 +509,38 @@
     <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script>
         (function($) {
+
             var init = function() {
                 baseImg = new Image();
                 baseImg.src = 'card_notext.png';
                 iconImg = new Image();
                 stage = new createjs.Stage('result');
+                genImage();
+                stage.update();
+            }
+
+            var preloadImages = function(srcs) {
+                if (!srcs.length) {
+                    return;
+                }
+                var dfd = $.Deferred();
+                var imgs = [];
+                for (var i = 0, l = srcs.length; i < l; i++) {
+                    var img = new Image();
+                    img.src = srcs[i];
+                    imgs.push(img);
+                }
+                var check = function() {
+                    for (var i = 0, l = imgs.length; i < l; i++) {
+                        if (imgs[i].complete !== true) {
+                            setTimeout(check, 250);
+                            return false;
+                        }
+                    }
+                    dfd.resolve(imgs);
+                };
+                check();
+                return dfd.promise();
             }
 
             var genImage = function() {
@@ -389,19 +608,14 @@
             }
 
             $(function() {
+                var srcs = ['card_notext.png', 'icon_hokuto.png', 'icon_jesse.png', 'icon_juri.png', 'icon_kochi.png', 'icon_kyomo.png', 'icon_shintaro.png'];
                 $(window).on('load', function() {
-                    init();
+                    preloadImages(srcs).done(function() {
+                        init();
+                    });
                 });
 
-                $('#update').on('click', function(e) {
-                    e.preventDefault();
-                    $('.hide').fadeIn();
-                    var speed = 1000;
-                    var target = $('#result');
-                    var position = target.offset().top;
-                    $("html, body").animate({
-                        scrollTop: position
-                    }, speed, "swing");
+                $('select,textarea,input').change(function(e) {
                     stage = new createjs.Stage('result');
                     genImage();
                     stage.update();
