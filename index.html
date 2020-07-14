@@ -728,7 +728,7 @@
 
                     if (key == 'txt01' && content) {
                         var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{13})/g, "$1" + "\n");
-                        if (content.length < 13) {
+                        if ($('#txt01').val().length <= 13) {
                             this.y = 793;
                         }
                     }
