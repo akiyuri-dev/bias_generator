@@ -445,7 +445,9 @@
             text-decoration: none;
         }
 
-        .hide {}
+        .hide {
+            display: none;
+        }
 
         #result {
             margin-bottom: 8%;
@@ -491,6 +493,8 @@
                 <textarea rows="6" type="text" name="txt02" id="txt02"></textarea>
             </div>
         </div>
+
+        <a class="btn" id="update" href="#">画像を作成する！</a>
 
         <style>
             #result {
@@ -552,7 +556,6 @@
                 iconImg.src = val + '.png';
                 icon.regX = -380;
                 icon.regY = -394;
-                console.dir(iconImg);
                 stage.addChild(img);
                 stage.addChild(icon);
 
@@ -616,7 +619,15 @@
                     });
                 });
 
-                $('select,textarea,input').change(function(e) {
+                $('#update').on('click', function(e) {
+                    e.preventDefault();
+                    $('.hide').fadeIn();
+                    var speed = 1000;
+                    var target = $('#result');
+                    var position = target.offset().top;
+                    $("html, body").animate({
+                        scrollTop: position
+                    }, speed, "swing");
                     stage = new createjs.Stage('result');
                     genImage();
                     stage.update();
