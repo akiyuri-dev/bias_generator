@@ -16,13 +16,26 @@
     <meta property="og:url" content="https://oharu-st.github.io/bias_generator/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Where is your bias?">
-    <meta property="og:image:width" content="600">
-    <meta property="og:image:height" content="315">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://oharu-st.github.io/bias_generator/ogp.png">
     <!-- /Twitter Card -->
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172678106-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-172678106-1');
+
+    </script>
 
 </head>
 
@@ -253,6 +266,23 @@
 
         .form .column {
             margin-bottom: 15px;
+            position: relative;
+        }
+
+        .column .count {
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 10px;
+            vertical-align: bottom;
+        }
+
+        .column .count.red {
+            color: #f00;
+        }
+
+        .column .count .num {
+            font-size: 15px;
         }
 
         /*select {
@@ -443,6 +473,16 @@
             font-size: 14px;
             display: inline-block;
             text-decoration: none;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -ms-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
+            opacity: 1;
+        }
+
+        .btn.off {
+            opacity: 0.3;
         }
 
         .hide {
@@ -477,6 +517,40 @@
             margin-bottom: 15px;
         }
 
+        .columnbtn {
+            display: flex;
+        }
+
+        .columnbtn a:first-child {
+            margin-right: 15px;
+        }
+
+        h3 {
+            font-size: 14px;
+            color: #a79556;
+            font-weight: bold;
+            padding: 10px 0;
+        }
+
+        .link {
+            margin-bottom: 16%;
+            font-size: 10px;
+        }
+
+        .link li {
+            margin-bottom: 5px;
+        }
+
+        .link a {
+            color: #d9d4c3;
+        }
+
+        .loadimg {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
     </style>
 
     <div class="wrapper">
@@ -503,15 +577,17 @@
             </div>
             <div class="column">
                 <p>自担への沼落ちを一言で</p>
+                <p class="count count_txt01"><span class="num">0</span> / <span class="max">26</span>字</p>
                 <input type="text" name="txt01" id="txt01">
             </div>
             <div class="column">
                 <p>沼落ちを一言で</p>
+                <p class="count count_txt02"><span class="num">0</span> / <span class="max">153</span>字</p>
                 <textarea rows="6" type="text" name="txt02" id="txt02"></textarea>
             </div>
         </div>
 
-        <a class="btn" id="update" href="#">画像を作成する！</a>
+        <a class="btn off" id="update" href="#">画像を作成する！</a>
 
         <style>
             #result {
@@ -530,20 +606,58 @@
                 <a href="https://twitter.com/share?url=https%3A%2F%2Foharu-st.github.io%2Fbias_generator%2F&text=%23YOU%E3%81%AE%E8%87%AA%E6%8B%85%E3%81%AF%E3%81%A9%E3%81%93%E3%81%8B%E3%82%89%EF%BC%9F%0a" target="_blank" class="btn">twitterでシェア</a>
             </div>
             <a id="download-image">images DL</a>
+            <ul class="link">
+                <li>
+                    <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+                </li>
+            </ul>
         </div>
     </div>
+    <img class="loadimg" src="icon_jesse.png">
+    <img class="loadimg" src="icon_hokuto.png">
+    <img class="loadimg" src="icon_juri.png">
+    <img class="loadimg" src="icon_kochi.png">
+    <img class="loadimg" src="icon_kyomo.png">
+    <img class="loadimg" src="icon_shintaro.png">
     <script src="https://code.createjs.com/easeljs-0.7.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script>
         (function($) {
 
             var init = function() {
+                $('.loadimg').hide();
                 baseImg = new Image();
                 baseImg.src = 'card_notext.png';
                 iconImg = new Image();
                 stage = new createjs.Stage('result');
                 genImage();
                 stage.update();
+                textCheck();
+            }
+            var textCheck = function() {
+                var len01 = $('#txt01').val().length
+                var len02 = $('#txt02').val().length
+                var $count_txt01 = $('.count_txt01');
+                var $count_txt02 = $('.count_txt02');
+                var max01 = $count_txt01.find('.max').text() * 1;
+                var max02 = $count_txt02.find('.max').text() * 1;
+                $count_txt01.find('.num').text(len01);
+                if (len01 > max01) {
+                    $count_txt01.addClass('red');
+                } else {
+                    $count_txt01.removeClass('red');
+                }
+                $('.count_txt02').find('.num').text(len02);
+                if (len02 > max02) {
+                    $count_txt02.addClass('red');
+                } else {
+                    $count_txt02.removeClass('red');
+                }
+                if (len01 > 0 && len02 > 0 && $('.count').hasClass('red') === false && $('select').val() != 'none') {
+                    $('#update').removeClass('off');
+                } else {
+                    $('#update').addClass('off');
+                }
             }
 
             var preloadImages = function(srcs) {
@@ -573,13 +687,16 @@
             var genImage = function() {
                 var img = new createjs.Bitmap(baseImg);
                 var icon = new createjs.Bitmap(iconImg);
+                stage.addChild(img);
+
                 var
                     val = $('select option:selected').val();
-                iconImg.src = val + '.png';
-                icon.regX = -380;
-                icon.regY = -394;
-                stage.addChild(img);
-                stage.addChild(icon);
+                if ('none' != val) {
+                    iconImg.src = val + '.png';
+                    icon.regX = -380;
+                    icon.regY = -394;
+                    stage.addChild(icon);
+                }
 
                 var txt = {
                     'txt01': {
@@ -639,6 +756,9 @@
                     preloadImages(srcs).done(function() {
                         init();
                     });
+                });
+                $('select,textarea,input').change(function() {
+                    textCheck();
                 });
 
                 $('#update').on('click', function(e) {
