@@ -451,6 +451,9 @@
 
         #result {
             margin-bottom: 8%;
+            border: 3px solid #d9d4c3;
+            width: 80%;
+            border-radius: 5px;
         }
 
         #download-image {
@@ -458,6 +461,20 @@
             display: block;
             overflow: hidden;
             visibility: hidden;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #a79556;
+            font-weight: bold;
+            padding: 15px 0;
+        }
+
+        .hide .description {
+            border: none;
+            padding: 0;
+            margin-top: 0;
+            margin-bottom: 15px;
         }
 
     </style>
@@ -503,10 +520,15 @@
 
         </style>
         <div class="hide">
+            <h2>作成完了！</h2>
+            <p class="description">SNSでシェアする場合は画像を保存の上、<br>シェアボタンをお使いください。</p>
             <div class="module">
                 <canvas id="result" width="900" height="1600"></canvas>
             </div>
-            <a href="#" class="btn" id="saveform">画像として保存</a>
+            <div class="columnbtn">
+                <a href="#" class="btn" id="saveform">画像として保存</a>
+                <a href="https://twitter.com/share?url=https%3A%2F%2Foharu-st.github.io%2Fbias_generator%2F&text=%23YOU%E3%81%AE%E8%87%AA%E6%8B%85%E3%81%AF%E3%81%A9%E3%81%93%E3%81%8B%E3%82%89%EF%BC%9F%0a" target="_blank" class="btn">twitterでシェア</a>
+            </div>
             <a id="download-image">images DL</a>
         </div>
     </div>
