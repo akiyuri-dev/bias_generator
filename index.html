@@ -725,19 +725,22 @@
 
                 $.each(txt, function(key, value) {
                     var content = $('#' + key).val();
+                    var ua = window.navigator.userAgent.toLowerCase();
 
                     if (key == 'txt01' && content) {
-                        var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{13})/g, "$1" + "\n");
+                        if(ua.indexOf("android") !== -1) {
+                            var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{12})/g, "$1" + "\n");
+                        }else{
+                            var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{13})/g, "$1" + "\n");
+                        }
                         if ($('#txt01').val().length <= 13) {
                             this.y = 793;
                         }
                     }
 
                     if (key == 'txt02') {
-                        var ua = window.navigator.userAgent.toLowerCase();
-
                         if(ua.indexOf("android") !== -1) {
-                            var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{15})/g, "$1" + "\n");
+                            var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{14})/g, "$1" + "\n");
                         }else{
                             var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{17})/g, "$1" + "\n");
                         }
