@@ -734,7 +734,13 @@
                     }
 
                     if (key == 'txt02') {
-                        var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{17})/g, "$1" + "\n");
+                        var ua = window.navigator.userAgent.toLowerCase();
+
+                        if(ua.indexOf("android") !== -1) {
+                            var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{15})/g, "$1" + "\n");
+                        }else{
+                            var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{17})/g, "$1" + "\n");
+                        }
                     }
 
                     var obj = new createjs.Text(content);
