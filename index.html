@@ -581,7 +581,7 @@
             </div>
             <div class="column">
                 <p>沼落ちへの詳細</p>
-                <p class="count count_txt02"><span class="num">0</span> / <span class="max">153</span>字</p>
+                <p class="count count_txt02"><span class="num">0</span> / <span class="max" id="02size">153</span>字</p>
                 <textarea rows="6" type="text" name="txt02" id="txt02"></textarea>
             </div>
         </div>
@@ -632,6 +632,10 @@
                 stage = new createjs.Stage('result');
                 genImage();
                 stage.update();
+                var ua = window.navigator.userAgent.toLowerCase();
+                if(ua.indexOf("android") !== -1) {
+                    document.getElementById("02size").textContent = '140';
+                }
                 textCheck();
             }
             var textCheck = function() {
