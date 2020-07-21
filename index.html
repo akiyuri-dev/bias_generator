@@ -632,32 +632,44 @@
                 stage = new createjs.Stage('result');
                 genImage();
                 stage.update();
-                var ua = window.navigator.userAgent.toLowerCase();
-                if(ua.indexOf("android") !== -1) {
-                    document.getElementById("02size").textContent = '140';
-                }
                 textCheck();
             }
-            var textCheck = function() {
-                var len01 = $('#txt01').val().length
-                var len02 = $('#txt02').val().length
-                var $count_txt01 = $('.count_txt01');
-                var $count_txt02 = $('.count_txt02');
-                var max01 = $count_txt01.find('.max').text() * 1;
-                var max02 = $count_txt02.find('.max').text() * 1;
-                $count_txt01.find('.num').text(len01);
-                if (len01 > max01) {
-                    $count_txt01.addClass('red');
-                } else {
-                    $count_txt01.removeClass('red');
-                }
-                $('.count_txt02').find('.num').text(len02);
-                if (len02 > max02) {
-                    $count_txt02.addClass('red');
-                } else {
-                    $count_txt02.removeClass('red');
-                }
-                if (len01 > 0 && len02 > 0 && $('.count').hasClass('red') === false && $('select').val() != 'none') {
+            var textCheck = function () {
+
+                var countFlag01 = $('#txt01').val().length;
+                var countFlag02 = $('#txt02').val().length;
+
+                $("#txt01").on("keydown keyup keypress change", function () {
+                    var len01 = $('#txt01').val().length
+                    var $count_txt01 = $('.count_txt01');
+                    var max01 = $count_txt01.find('.max').text() * 1;
+                    $count_txt01.find('.num').text(len01);
+                    if (len01 > max01) {
+                        $count_txt01.addClass('red');
+                    } else {
+                        $count_txt01.removeClass('red');
+                    }
+                    updateOff(len01, countFlag02);
+                });
+
+                $("#txt02").on("keydown keyup keypress change", function () {
+                    var len02 = $('#txt02').val().length
+                    var $count_txt02 = $('.count_txt02');
+                    var max02 = $count_txt02.find('.max').text() * 1;
+                    $('.count_txt02').find('.num').text(len02);
+                    if (len02 > max02) {
+                        $count_txt02.addClass('red');
+                    } else {
+                        $count_txt02.removeClass('red');
+                    }
+                    updateOff(countFlag01, len02);
+                });
+
+            }
+
+            var updateOff = function (countFlag01, countFlag02) {
+                console.log(countFlag01 + " " + countFlag02);
+                if (countFlag01 > 1 && countFlag02 > 1 && $('.count').hasClass('red') === false && $('select').val() != 'none') {
                     $('#update').removeClass('off');
                 } else {
                     $('#update').addClass('off');
@@ -729,25 +741,16 @@
 
                 $.each(txt, function(key, value) {
                     var content = $('#' + key).val();
-                    var ua = window.navigator.userAgent.toLowerCase();
 
                     if (key == 'txt01' && content) {
-                        if(ua.indexOf("android") !== -1) {
-                            var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{12})/g, "$1" + "\n");
-                        }else{
                             var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{13})/g, "$1" + "\n");
-                        }
                         if ($('#txt01').val().length <= 13) {
                             this.y = 793;
                         }
                     }
 
                     if (key == 'txt02') {
-                        if(ua.indexOf("android") !== -1) {
-                            var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{14})/g, "$1" + "\n");
-                        }else{
-                            var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{17})/g, "$1" + "\n");
-                        }
+                        var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{17})/g, "$1" + "\n");
                     }
 
                     var obj = new createjs.Text(content);
