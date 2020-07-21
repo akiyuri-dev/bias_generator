@@ -581,7 +581,7 @@
             </div>
             <div class="column">
                 <p>沼落ちへの詳細</p>
-                <p class="count count_txt02"><span class="num">0</span> / <span class="max" id="02size">153</span>字</p>
+                <p class="count count_txt02"><span class="num">0</span> / <span class="max">153</span>字</p>
                 <textarea rows="6" type="text" name="txt02" id="txt02"></textarea>
             </div>
         </div>
@@ -743,7 +743,7 @@
                     var content = $('#' + key).val();
 
                     if (key == 'txt01' && content) {
-                            var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{13})/g, "$1" + "\n");
+                        var content = content.replace(/[\r|\r\n|\n]/g, "").replace(/(.{13})/g, "$1" + "\n");
                         if ($('#txt01').val().length <= 13) {
                             this.y = 793;
                         }
